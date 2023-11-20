@@ -1,0 +1,2 @@
+Services:
+	catalogapi => 5021
