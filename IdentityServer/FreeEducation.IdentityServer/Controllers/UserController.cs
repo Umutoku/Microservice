@@ -1,15 +1,19 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using FreeEducation.IdentityServer.Dtos;
 using FreeEducation.IdentityServer.Models;
 using FreeEducation.Shared.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace FreeEducation.IdentityServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(LocalApi.PolicyName)]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -46,5 +50,26 @@ namespace FreeEducation.IdentityServer.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+
+            if (userIdClaim is null)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByIdAsync(userIdClaim.Value);
+
+            if (user is null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(new { Id = user.Id, UserName = user.UserName, Email = user.Email, City = user.City });
+        }
+
     }
 }

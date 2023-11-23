@@ -1,2 +1,6 @@
 Services:
 	catalogapi => 5021
+	photosapi => 5022
+	basketapi => 5023
+	discountapi => 5024
+identityserver => 5001

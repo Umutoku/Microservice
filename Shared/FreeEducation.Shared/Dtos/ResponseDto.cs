@@ -22,7 +22,9 @@ namespace FreeEducation.Shared.Dtos
         public static ResponseDto<T> Fail(List<string> errors, int statusCode) { return new ResponseDto<T> { Errors = errors, StatusCode = statusCode, isSuccessful = false }; }
 
         public static ResponseDto<T> Fail(string error, int statusCode) { return new ResponseDto<T> { Errors = new List<string> { error }, StatusCode = statusCode, isSuccessful = false }; }
-        }
+
+
+    }
 
     }
 

@@ -28,6 +28,7 @@ namespace FreeEducation.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalApiAuthentication();
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -52,6 +53,9 @@ namespace FreeEducation.IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+
+            builder
+                .AddResourceOwnerValidator<Services.IdentityResourceOwnerPasswordvalidator>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
@@ -78,7 +82,7 @@ namespace FreeEducation.IdentityServer
             }
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();

@@ -1,0 +1,6 @@
+@FreeEducation.Services.Basket_HostAddress = http://localhost:5258
+
+GET {{FreeEducation.Services.Basket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
