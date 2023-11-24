@@ -3,4 +3,5 @@ Services:
 	photosapi => 5022
 	basketapi => 5023
 	discountapi => 5024
+    orderapi => 5025
 identityserver => 5001

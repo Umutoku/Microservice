@@ -36,8 +36,6 @@ builder.Services.AddSingleton<RedisService>(sp =>
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddHttpContextAccessor();
 
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
 JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Remove("sub");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

@@ -1,0 +1,6 @@
+@FreeEducation.Services.Order.API_HostAddress = http://localhost:5028
+
+GET {{FreeEducation.Services.Order.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

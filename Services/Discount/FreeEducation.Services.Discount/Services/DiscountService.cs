@@ -11,16 +11,23 @@ namespace FreeEducation.Services.Discount.Services
         private readonly IConfiguration _configuration;
         public readonly IDbConnection _connection;
 
-        public DiscountService(IDbConnection connection,IConfiguration configuration)
+        public DiscountService(IConfiguration configuration)
         {
             _configuration = configuration;
             _connection = new NpgsqlConnection(_configuration.GetConnectionString("PostgreSql"));
 
         }
 
-        public Task<ResponseDto<NoContent>> Delete(int id)
+        public async Task<ResponseDto<NoContent>> Delete(int id)
         {
-            throw new NotImplementedException();
+            var status = await _connection.ExecuteAsync("Delete from discount where id=@id",new {id});
+
+            if(status == 0)
+            {
+                return ResponseDto<NoContent>.Fail("Discount not found",404);
+            }
+
+            return ResponseDto<NoContent>.Success(204);
         }
 
         public async Task<ResponseDto<List<Models.Discount>>> GetAll()
@@ -30,24 +37,51 @@ namespace FreeEducation.Services.Discount.Services
             return ResponseDto<List<Models.Discount>>.Success(discounts.ToList(),200);
         }
 
-        public Task<ResponseDto<Models.Discount>> GetByCodeAndUserId(string code, string userId)
+        public async Task<ResponseDto<Models.Discount>> GetByCodeAndUserId(string code, string userId)
         {
-            throw new NotImplementedException();
+            var discounts = await _connection.QueryFirstOrDefaultAsync<Models.Discount>("Select * from discount where code=@code and userId=@userId",new {code,userId});
+
+            if(discounts == null)
+            {
+                return ResponseDto<Models.Discount>.Fail("Discount not found",404);
+            }
+
+            return ResponseDto<Models.Discount>.Success(discounts,200);
         }
 
-        public Task<ResponseDto<Models.Discount>> GetById(int id)
+        public async Task<ResponseDto<Models.Discount>> GetById(int id)
         {
-            throw new NotImplementedException();
+            var discount = await _connection.QueryFirstOrDefaultAsync<Models.Discount>("Select * from discount where id=@id",new {id});
+            if(discount == null)
+            {
+                return ResponseDto<Models.Discount>.Fail("Discount not found",404);
+            }
+            return ResponseDto<Models.Discount>.Success(discount,200);
         }
 
-        public Task<ResponseDto<NoContent>> Save(Models.Discount discount)
+        public async Task<ResponseDto<NoContent>> Save(Models.Discount discount)
         {
-            throw new NotImplementedException();
+            var status = await _connection.ExecuteAsync("Insert into discount (code,rate,userId) values (@code,@rate,@userId)",discount);
+
+            if(status == 0)
+            {
+                return ResponseDto<NoContent>.Fail("An error occured while adding discount",500);
+            }
+
+            return ResponseDto<NoContent>.Success(204);
         }
 
-        public Task<ResponseDto<NoContent>> Update(Models.Discount discount)
+        public async Task<ResponseDto<NoContent>> Update(Models.Discount discount)
         {
-            throw new NotImplementedException();
+            var status = await _connection.ExecuteAsync("Update discount set code=@code,rate=@rate,userId=@userId where id=@id",discount);
+
+            if(status == 0)
+            {
+                return ResponseDto<NoContent>.Fail("Discount not found",404);
+            }
+
+            return ResponseDto<NoContent>.Success(204);
         }
+
     }
 }
