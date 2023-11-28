@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FreeEducation.Services.Order.Application.Handler
+namespace FreeEducation.Services.Order.Application.Handlers
 {
     public class GetOrderByUserIdQueryHandler : IRequestHandler<GetOrderByUserIdQuery, ResponseDto<List<OrderDto>>>
     {

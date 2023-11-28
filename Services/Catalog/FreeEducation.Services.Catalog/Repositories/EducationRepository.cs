@@ -30,7 +30,7 @@ namespace FreeEducation.Services.Catalog.Repositories
             }   
             else
             {
-                educations = [];
+                educations = new List<Education>();
             }
             return educations;
         }
@@ -53,7 +53,7 @@ namespace FreeEducation.Services.Catalog.Repositories
             }
             else
             {
-                educations = [];
+                educations = new List<Education>();
             }
             return educations;
         }

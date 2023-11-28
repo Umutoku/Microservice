@@ -17,6 +17,9 @@ namespace FreeEducation.IdentityServer
             new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}},
             new ApiResource("resource_basket"){Scopes={"basket_fullpermission"}},
             new ApiResource("resource_discount"){Scopes={"discount_fullpermission"}},
+            new ApiResource("resource_order"){Scopes={"order_fullpermission"}},
+            new ApiResource("resource_payment"){Scopes={"payment_fullpermission"}},
+            new ApiResource("resource_gateway"){Scopes={"gateway_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
 
@@ -36,7 +39,9 @@ namespace FreeEducation.IdentityServer
                 new ApiScope("photo_stock_fullpermission", "Photo Stock API için full erişim"),
                 new ApiScope("basket_fullpermission", "Basket API için full erişim"),
                 new ApiScope("discount_fullpermission", "Discount API için full erişim"),
-
+                new ApiScope("order_fullpermission", "Order API için full erişim"),
+                new ApiScope("payment_fullpermission", "Payment API için full erişim"),
+                new ApiScope("gateway_fullpermission", "Gateway API için full erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -49,7 +54,7 @@ namespace FreeEducation.IdentityServer
                     ClientName = "Asp.Net Core MVC",
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = {"catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName}
+                    AllowedScopes = {"catalog_fullpermission", "photo_stock_fullpermission", "gateway_fullpermission",IdentityServerConstants.LocalApi.ScopeName}
                 },
 
                 new Client
@@ -59,7 +64,8 @@ namespace FreeEducation.IdentityServer
                     AllowOfflineAccess = true,
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = {"basket_fullpermission","discount_fullpermission",
+                    AllowedScopes = {"basket_fullpermission","discount_fullpermission","order_fullpermission",
+                    "payment_fullpermission","gateway_fullpermission",
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,

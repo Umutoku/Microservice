@@ -16,7 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Remove("sub");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["IdentityServerURL"];
+    options.Audience = "resource_basket";
+    options.RequireHttpsMetadata = false;
+    options.MapInboundClaims = false;
 
+});
 builder.Services.AddControllers(x =>
 {
     x.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
@@ -36,15 +44,7 @@ builder.Services.AddSingleton<RedisService>(sp =>
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddHttpContextAccessor();
 
-JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Remove("sub");
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["IdentityServerURL"];
-    options.Audience = "resource_basket";
-    options.RequireHttpsMetadata = false;
-    options.MapInboundClaims = false;
 
-});
 
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 var app = builder.Build();

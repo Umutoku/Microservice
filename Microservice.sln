@@ -36,15 +36,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Disc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{F1817A71-442F-4186-ABF9-E78BBB598B52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Services.Order.API", "Services\Order\FreeEducation.Services.Order.API\FreeEducation.Services.Order.API.csproj", "{417E0969-72A5-4974-A3FD-B972FCF001B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Order.API", "Services\Order\FreeEducation.Services.Order.API\FreeEducation.Services.Order.API.csproj", "{417E0969-72A5-4974-A3FD-B972FCF001B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Services.Order.Application", "Services\Order\FreeEducation.Services.Order.Application\FreeEducation.Services.Order.Application.csproj", "{55122B47-232A-4FD4-AEF0-58CA95FE3EC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Order.Application", "Services\Order\FreeEducation.Services.Order.Application\FreeEducation.Services.Order.Application.csproj", "{55122B47-232A-4FD4-AEF0-58CA95FE3EC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Services.Order.Domain", "Services\Order\FreeEducation.Services.Order.Domain\FreeEducation.Services.Order.Domain.csproj", "{F77EEE7A-7EEF-4F52-9398-8DE173C1BBC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Order.Domain", "Services\Order\FreeEducation.Services.Order.Domain\FreeEducation.Services.Order.Domain.csproj", "{F77EEE7A-7EEF-4F52-9398-8DE173C1BBC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Services.Order.Domain.Core", "Services\Order\FreeEducation.Services.Order.Domain.Core\FreeEducation.Services.Order.Domain.Core.csproj", "{525279AD-C770-4ADF-BC4D-10A2CFC81308}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Order.Domain.Core", "Services\Order\FreeEducation.Services.Order.Domain.Core\FreeEducation.Services.Order.Domain.Core.csproj", "{525279AD-C770-4ADF-BC4D-10A2CFC81308}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Services.Order.Infrastructure", "Services\Order\FreeEducation.Services.Order.Infrastructure\FreeEducation.Services.Order.Infrastructure.csproj", "{0FAAC024-2981-4A23-9885-5CC75C068508}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.Order.Infrastructure", "Services\Order\FreeEducation.Services.Order.Infrastructure\FreeEducation.Services.Order.Infrastructure.csproj", "{0FAAC024-2981-4A23-9885-5CC75C068508}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FakePayment", "FakePayment", "{E2704690-535D-4B21-9731-722008CDE764}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Services.FakePayment", "Services\FakePayment\FreeEducation.Services.FakePayment\FreeEducation.Services.FakePayment.csproj", "{42F8946C-83B3-4686-9C0C-E113A22525AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{9D9CCCB1-BB73-4296-96F7-F7D4FF423D30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeEducation.Gateway", "Gateways\FreeEducation.Gateway\FreeEducation.Gateway.csproj", "{642A0615-169F-4D00-9F85-345A408C5ACD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontends", "Frontends", "{D540C767-225E-4B01-BF43-DDD50077D77B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeEducation.Web", "Frontends\FreeEducation.Web\FreeEducation.Web.csproj", "{4413976A-FC9A-4F3B-837C-60F81E151266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +108,18 @@ Global
 		{0FAAC024-2981-4A23-9885-5CC75C068508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FAAC024-2981-4A23-9885-5CC75C068508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FAAC024-2981-4A23-9885-5CC75C068508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F8946C-83B3-4686-9C0C-E113A22525AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F8946C-83B3-4686-9C0C-E113A22525AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F8946C-83B3-4686-9C0C-E113A22525AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F8946C-83B3-4686-9C0C-E113A22525AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{642A0615-169F-4D00-9F85-345A408C5ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642A0615-169F-4D00-9F85-345A408C5ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642A0615-169F-4D00-9F85-345A408C5ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642A0615-169F-4D00-9F85-345A408C5ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4413976A-FC9A-4F3B-837C-60F81E151266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4413976A-FC9A-4F3B-837C-60F81E151266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4413976A-FC9A-4F3B-837C-60F81E151266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4413976A-FC9A-4F3B-837C-60F81E151266}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +141,10 @@ Global
 		{F77EEE7A-7EEF-4F52-9398-8DE173C1BBC0} = {F1817A71-442F-4186-ABF9-E78BBB598B52}
 		{525279AD-C770-4ADF-BC4D-10A2CFC81308} = {F1817A71-442F-4186-ABF9-E78BBB598B52}
 		{0FAAC024-2981-4A23-9885-5CC75C068508} = {F1817A71-442F-4186-ABF9-E78BBB598B52}
+		{E2704690-535D-4B21-9731-722008CDE764} = {CEDA2329-6A9A-4B44-AA18-952A2E3DA650}
+		{42F8946C-83B3-4686-9C0C-E113A22525AB} = {E2704690-535D-4B21-9731-722008CDE764}
+		{642A0615-169F-4D00-9F85-345A408C5ACD} = {9D9CCCB1-BB73-4296-96F7-F7D4FF423D30}
+		{4413976A-FC9A-4F3B-837C-60F81E151266} = {D540C767-225E-4B01-BF43-DDD50077D77B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C4BA5C1-D466-4D2D-8967-3C80DC807EE4}
