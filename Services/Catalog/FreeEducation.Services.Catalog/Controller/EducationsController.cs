@@ -30,7 +30,7 @@ namespace FreeEducation.Services.Catalog.Controller
             return CreateActionResultInstance(response);
         }
 
-        [HttpGet("ByUserId/{userId}")]
+        [HttpGet("GetAllByUserId/{userId}")]
         public async Task<IActionResult> GetAllByUserId(string userId)
         {
             var response = await _educationService.GetAllByUserIdAsync(userId);

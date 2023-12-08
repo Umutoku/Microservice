@@ -7,9 +7,9 @@ namespace FreeEducation.Web.Extensions;
 
 public static class ServiceExtension
 {
-    public static void AddHttpClientServices(this IServiceCollection services, IConfiguration Configuration)
+    public static void AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+            var serviceApiSettings = configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
             services.AddHttpClient<IIdentityService, IdentityService>();
 
@@ -17,11 +17,20 @@ public static class ServiceExtension
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-            
 
+            services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+            
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+            
+            services.AddHttpClient<IBasketService, BasketService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
             
         }

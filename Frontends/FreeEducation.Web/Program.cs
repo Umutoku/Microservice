@@ -1,17 +1,23 @@
+using FluentValidation.AspNetCore;
 using FreeEducation.Shared.Services;
 using FreeEducation.Web.Handler;
 using FreeEducation.Web.Models;
 using FreeEducation.Web.Extensions;
-using FreeEducation.Web.Services;
-using FreeEducation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FreeEducation.Web.Helpers;
+using FreeEducation.Web.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(x=>x
+        .RegisterValidatorsFromAssemblyContaining<EducationCreateInputValidation>());
+builder.Services.AddSingleton<PhotoHelper>();
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+builder.Services.AddScoped<ClientCredentialTokenHandler>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddAccessTokenManagement();
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>

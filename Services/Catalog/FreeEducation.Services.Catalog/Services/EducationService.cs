@@ -61,7 +61,7 @@ namespace FreeEducation.Services.Catalog.Services
             {
                 return ResponseDto<NoContent>.Fail("Category not found", 404);
             }
-            await _educationRepository.UpdateAsync(education);
+            await _educationRepository.UpdateAsync(newEducation);
             return ResponseDto<NoContent>.Success(204);
         }
 

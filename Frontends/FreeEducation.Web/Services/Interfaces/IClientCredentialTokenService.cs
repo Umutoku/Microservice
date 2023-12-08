@@ -2,5 +2,5 @@
 
 public interface IClientCredentialTokenService
 {
-    Task<String> GetToken();
+    Task<string> GetToken();
 }

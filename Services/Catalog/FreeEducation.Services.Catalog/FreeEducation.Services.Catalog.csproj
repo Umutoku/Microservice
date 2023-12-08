@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Frontends\FreeEducation.Web\FreeEducation.Web.csproj" />
     <ProjectReference Include="..\..\..\Shared\FreeEducation.Shared\FreeEducation.Shared.csproj" />
   </ItemGroup>
 

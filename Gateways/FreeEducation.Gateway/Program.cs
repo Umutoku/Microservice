@@ -8,7 +8,7 @@ builder.Configuration.AddJsonFile($"configuration.{builder.Environment.Environme
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddOcelot(builder.Configuration);
 //builder.Services.AddHttpClient<TokenExhangeDelegateHandler>();
 builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
 {

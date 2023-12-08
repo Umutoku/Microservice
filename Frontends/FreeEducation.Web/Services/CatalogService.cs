@@ -1,50 +1,105 @@
-﻿using FreeEducation.Web.Models;
+﻿using System.Net;
+using FreeEducation.Shared.Dtos;
+using FreeEducation.Web.Helpers;
 using FreeEducation.Web.Models.Catalogs;
 using FreeEducation.Web.Services.Interfaces;
 
 namespace FreeEducation.Web.Services;
 
-public class CatalogService: ICatalogService
+public class CatalogService(HttpClient httpClient, IPhotoStockService photoStockService,PhotoHelper photoHelper) : ICatalogService
 {
-    private readonly HttpClient _httpClient;
 
-    public CatalogService(HttpClient httpClient)
+    public async Task<List<EducationViewModel>> GetAllEducationAsync()
     {
-        _httpClient = httpClient;
+        var response = await httpClient.GetAsync("Educations");
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<ResponseDto<List<EducationViewModel>>>();
+
+        foreach (var educationViewModel in responseSuccess.Data)
+        {
+            educationViewModel.StockPictureUrl = photoHelper.GetPhotoStockUrl(educationViewModel.Picture);
+        }
+
+        return responseSuccess.Data;
     }
 
-    public Task<List<EducationViewModel>> GetAllEducationAsync()
+    public async Task<List<CategoryViewModel>> GetAllCategoryAsync()
     {
-        throw new NotImplementedException();
+        var response = await httpClient.GetAsync("Categories");
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<ResponseDto<List<CategoryViewModel>>>();
+        return responseSuccess.Data;
     }
 
-    public Task<List<CategoryViewModel>> GetAllCategoryAsync()
+    public async Task<List<EducationViewModel>> GetAllEducationByUserIdAsync(string userId)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.GetAsync($"educations/GetAllByUserId/{userId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<ResponseDto<List<EducationViewModel>>>();
+
+        foreach (var educationViewModel in responseSuccess.Data)
+        {
+            educationViewModel.StockPictureUrl = photoHelper.GetPhotoStockUrl(educationViewModel.Picture);
+        }
+
+        return responseSuccess.Data;
     }
 
-    public Task<List<EducationViewModel>> GetAllEducationByUserIdAsync(string userId)
+    public async Task<bool> DeleteEducationAsync(string educationId)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.DeleteAsync($"educations/{educationId}");
+
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> DeleteEducationAsync(string educationId)
+    public async Task<EducationViewModel> GetByEducationId(string educationId)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.GetAsync($"educations/{educationId}");
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var responseSuccess = await response.Content.ReadFromJsonAsync<ResponseDto<EducationViewModel>>();
+        responseSuccess.Data.StockPictureUrl = photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
+        return responseSuccess.Data;
     }
 
-    public Task<EducationViewModel> GetByEducationId(string educationId)
+    public async Task<bool> CreateEducationAsync(EducationCreateInput educationCreateInput)
     {
-        throw new NotImplementedException();
+        var resultPhotoService = await photoStockService.UploadPhoto(educationCreateInput.PhotoFormFile);
+        if (resultPhotoService != null)
+        {
+            educationCreateInput.Picture = resultPhotoService.Url;
+        }
+        var response = await httpClient.PostAsJsonAsync<EducationCreateInput>("educations", educationCreateInput);
+
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> CreateEducationAsync(EducationCreateInput educationCreateInput)
+    public async Task<bool> UpdateEducationAsync(EducationUpdateInput educationUpdateInput)
     {
-        throw new NotImplementedException();
-    }
+        var resultPhotoService = await photoStockService.UploadPhoto(educationUpdateInput.PhotoFormFile);
+        if (resultPhotoService != null)
+        {
+            await photoStockService.DeletePhoto(educationUpdateInput.Picture);
+            educationUpdateInput.Picture = resultPhotoService.Url;
+        }
 
-    public Task<bool> UpdateEducationAsync(EducationUpdateInput educationUpdateInput)
-    {
-        throw new NotImplementedException();
+        var response = await httpClient.PutAsJsonAsync<EducationUpdateInput>("educations", educationUpdateInput);
+
+        return response.IsSuccessStatusCode;
     }
 }
