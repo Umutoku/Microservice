@@ -6,7 +6,8 @@ public class BasketItemViewModel
     public string EducationId { get; set; }
     public string EducationName { get; set; }
     public decimal Price { get; set; }
-    private decimal? DiscountAppliedPrice { get; set; }
+
+    private decimal? DiscountAppliedPrice;
 
     public decimal GetCurrentPrice
     {

@@ -1,4 +1,5 @@
 ﻿using FreeEducation.Web.Models.Baskets;
+using FreeEducation.Web.Models.Discounts;
 using FreeEducation.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,25 @@ public class BasketController(IBasketService basketService, ICatalogService cata
     {
         await basketService.RemoveBasketItem(educationId);
 
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
+    {
+        var discountStatus = await basketService.ApplyDiscount(discountApplyInput.Code);
+        TempData["discountStatus"] = discountStatus;
+        return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> CancelApplyDiscount()
+    {
+        if(!ModelState.IsValid)
+        {
+            TempData["discountError"] = ModelState.Values.SelectMany(x=>x.Errors).Select(x=>x.ErrorMessage).FirstOrDefault();
+            return RedirectToAction(nameof(Index));
+        }
+
+        await basketService.CancelApplyDiscount();
         return RedirectToAction(nameof(Index));
     }
 }
