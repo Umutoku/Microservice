@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using System.Reflection;
 using FreeEducation.Services.Catalog.Repositories.Interfaces;
 using FreeEducation.Services.Catalog.Repositories;
+using MassTransit;
+using MassTransit.MultiBus;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +42,17 @@ builder.Services.AddAuthentication("Bearer")
         options.RequireHttpsMetadata = false;
         options.Audience = "resource_catalog";
     });
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUrl"], "/", host =>
+        {
+            host.Username("guest");
+            host.Password("Password");
+        });
+    });
+});
 
 var app = builder.Build();
 

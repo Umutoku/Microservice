@@ -4,6 +4,8 @@ using FreeEducation.Services.Catalog.Models;
 using FreeEducation.Services.Catalog.Repositories;
 using FreeEducation.Shared.Dtos;
 using System.Collections.Generic;
+using FreeEducation.Shared.Messages;
+using MassTransit;
 
 namespace FreeEducation.Services.Catalog.Services
 {
@@ -11,11 +13,13 @@ namespace FreeEducation.Services.Catalog.Services
     {
         private readonly IEducationRepository _educationRepository;
         private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public EducationService(IEducationRepository educationRepository, IMapper mapper)
+        public EducationService(IEducationRepository educationRepository, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
             _educationRepository = educationRepository;
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<ResponseDto<List<EducationDto>>> GetAllAsync()
@@ -62,6 +66,12 @@ namespace FreeEducation.Services.Catalog.Services
                 return ResponseDto<NoContent>.Fail("Category not found", 404);
             }
             await _educationRepository.UpdateAsync(newEducation);
+            await _publishEndpoint.Publish<EducationNameChangedEvent>(new EducationNameChangedEvent()
+            {
+                EducationId = educationUpdateDto.Id,
+                UpdatedName = educationUpdateDto.Name
+            }
+            );
             return ResponseDto<NoContent>.Success(204);
         }
 

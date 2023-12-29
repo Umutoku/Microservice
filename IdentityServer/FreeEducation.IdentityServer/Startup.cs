@@ -5,6 +5,7 @@
 using IdentityServer4;
 using FreeEducation.IdentityServer.Data;
 using FreeEducation.IdentityServer.Models;
+using FreeEducation.IdentityServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -60,6 +61,8 @@ namespace FreeEducation.IdentityServer
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
+            builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
+            
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
